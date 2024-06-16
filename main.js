@@ -1,61 +1,61 @@
 "use strict";
 let kitchenProducts = [
 	{
-		type: 'grater',
+		type: 'Grater',
 		price: 10
 	},
 	{
-		type: 'pastry-bag',
+		type: 'Pastry-Bag',
 		price: 25
 	},
 	{
-		type: 'scale',
+		type: 'Scale',
 		price: 5
 	},
 	{
-		type: 'whisk',
+		type: 'Whisk',
 		price: 15
 	}
 ];
 
 let devicesProducts = [
 	{
-		type: 'desktop',
+		type: 'Desktop',
 		price: [100,1000]
 	},
 	{
-		type: 'laptop',
+		type: 'Laptop',
 		price: [50,1500]
 	},
 	{
-		type: 'smartphone',
+		type: 'Smartphone',
 		price: [80,2000]
 	},
 	{
-		type: 'tablet',
+		type: 'Tablet',
 		price: [20,1300]
 	}
 ];
 
 let cosmeticsProducts = [
 	{
-		type: 'blush',
+		type: 'Blush',
 		price: 100
 	},
 	{
-		type: 'eyeshadow',
+		type: 'Eyeshadow',
 		price: 50
 	},
 	{
-		type: 'lipstick',
+		type: 'Lipstick',
 		price: 80
 	},
 	{
-		type: 'nail-polish',
+		type: 'Nail-Polish',
 		price: 200
 	},
 	{
-		type: 'perfume',
+		type: 'Perfume',
 		price: 300,
 	}
 ];
@@ -76,5 +76,79 @@ let Cosmetics = {
 }
 
 //Всім товарам з массивів kitchenProducts, devicesProducts, cosmeticsProducts
-//добавити в якості об'єкта-прототипа об'єкти, ствоорені на першому кроці. 
+//добавити в якості об'єкта-прототипа об'єкти, створені на першому кроці. 
 //Після цього, доповнити кожен товар своїми властивостями.
+// let grater = Object.create(Kitchen);
+// grater.type = 'grater';
+// grater.price = 10;
+// console.log(Kitchen);
+// console.log(grater);
+
+let aProds = [
+    kitchenProducts = kitchenProducts.map(item => Object.assign(Object.create(Kitchen), item)),
+    devicesProducts = devicesProducts.map(item => Object.assign(Object.create(Devices), item)),
+    cosmeticsProducts = cosmeticsProducts.map(item => Object.assign(Object.create(Cosmetics), item)),
+]
+
+let showKitchenProds = [];
+kitchenProducts.map(prod => {
+    showKitchenProds.push(
+        `<div class="product__cell">
+            <div class="product__image">
+                <img src="img/kitchen/${prod.type}.svg" alt="${prod.type}">
+            </div>
+            <div class="product__desc">
+                <p>Name: <span class="product__name">${prod.type}</span></p>
+                <p>Price: <span class="product__name">$${prod.price}</span></p>
+            </div>
+        </div>`
+    )
+})
+
+let showDevicesProducts = [];
+devicesProducts.map(prod => {
+    showDevicesProducts.push(
+       `<div class="product__cell">
+            <div class="product__image">
+                <img src="img/devices/${prod.type}.svg" alt="${prod.type}">
+            </div>
+            <div class="product__desc">
+                <p>Name: <span class="product__name">${prod.type}</span></p>
+                <p>Price: <span class="product__name">$${Array.isArray(prod.price) === true ? String(prod.price[0])+ "-" +String(prod.price[1]) : prod.price}</span></p>
+            </div>
+        </div>` 
+    )
+})
+
+let showCosmeticsProducts = [];
+cosmeticsProducts.map(prod => {
+    showCosmeticsProducts.push(
+       `<div class="product__cell">
+            <div class="product__image">
+                <img src="img/cosmetics/${prod.type}.svg" alt="${prod.type}">
+            </div>
+            <div class="product__desc">
+                <p>Name: <span class="product__name">${prod.type}</span></p>
+                <p>Price: <span class="product__name">$${prod.price}</span></p>
+            </div>
+        </div>` 
+    )
+})
+
+document.write(
+    `<div class="categories">
+        <div class="kitchen">
+            <h2>Category: Kitchen</h2>
+            <div class="category__kitchen">${showKitchenProds.join(" ")}</div>
+        </div>
+        <div class="devices">
+            <h2>Category: Devices</h2>
+            <div class="category__kitchen">${showDevicesProducts.join(" ")}</div>
+        </div>
+        <div class="devices">
+            <h2>Category: Cosmetics</h2>
+            <div class="category__kitchen">${showCosmeticsProducts.join(" ")}</div>
+        </div>
+    </div>`
+);
+
